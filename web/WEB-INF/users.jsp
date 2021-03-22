@@ -55,30 +55,30 @@
                         <c:forEach items="${users}" var="user">
                             <tr>
                                 <td> ${user.email}</td>
-                            <td>
-                                <input class="userInfo chActive" type="checkbox" name="isActive" checked>                          
-                            </td>
-                            <td>${user.firstName}</td>
-                            <td>${user.lastName}</td>
-                            <td>${user.roleID}</td>
+                                <td>
+                                    <input class="userInfo chActive" type="checkbox" name="isActive" checked>                          
+                                </td>
+                                <td>${user.firstName}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.role.roleName}</td>
 
-                            
-                            <td>
-                                <form action="users" method="post" >
-                                    <input type="submit" name="edit" value="Edit">
-                                    <input type="hidden" name="action" value="edit">
-                                    <input type="hidden" name="editEmail" value="${user.email}">
-                                   
-                                </form>
-                            </td>
-                            <td>
-                                <form action="users" method="post" >
-                                    <input type="submit" name="delete" value="Delete">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="email" value="${user.email}">
-                              
-                                </form>
-                            </td>
+
+                                <td>
+                                    <form action="users" method="post" >
+                                        <input type="submit" name="edit" value="Edit">
+                                        <input type="hidden" name="action" value="edit">
+                                        <input type="hidden" name="manageEmail" value="${user.email}">
+
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="users" method="post" >
+                                        <input type="submit" name="delete" value="Delete">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="deleteEmail" value="${user.email}">
+
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                     
@@ -93,26 +93,26 @@
                         <input class="userInfo" type="text" placeholder="Edit First Name" name="editFirstname" value="${editFirstname}"> 
                         <input class="userInfo" type="text" placeholder="Edit Last Name" name="editLastname" value="${editLastname}">     
                         <input class="userInfo" type="password" placeholder="Password" name="editPassword" value="${editPassword}">
-                        <select class="userInfo" name="editRole" value="${editRole}">
-                            <c:if test="${editRole eq 1}">
-                                <option value=1 selected>System Admin</option>
-                                 <option value=2 >Regular User</option>
-                                 <option value=3 >Company Admin</option>
+                        <select class="userInfo" name="editRole" value="${editRoleID}">
+                            <c:if test="${editRoleID eq 1}">
+                                <option value="1" selected>System Admin</option>
+                                 <option value="2" >Regular User</option>
+                                 <option value="3" >Company Admin</option>
                             </c:if>
-                            <c:if test="${editRole eq 2}">
-                                <option value=1 >System Admin</option>
-                                 <option value=2 selected>Regular User</option>
-                                 <option value=3 >Company Admin</option>
+                            <c:if test="${editRoleID eq 2}">
+                                <option value="1" >System Admin</option>
+                                 <option value="2" selected>Regular User</option>
+                                 <option value="3" >Company Admin</option>
                             </c:if>
-                            <c:if test="${editRole eq 3}">               
-                                <option value=1 >System Admin</option>
-                                 <option value=2 >Regular User</option>
-                                 <option value=3 selected >Company Admin</option>
+                            <c:if test="${editRoleID eq 3}">               
+                                <option value="1" >System Admin</option>
+                                 <option value="2" >Regular User</option>
+                                 <option value="3" selected >Company Admin</option>
                             </c:if>
                         </select>
 
                         <input type="hidden" name="action" value="save">
-                        <input class="addInput" type="submit" value="Edit">
+                        <input class="addInput" type="submit" value="Save">
                         <input type="hidden" name="action" value="cancel">
                         <input class="Cancel" type="submit" value="Cancel">
                     </form>  

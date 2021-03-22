@@ -55,18 +55,18 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         UserService us = new UserService();
 
-        String editEmail = request.getParameter("editEmail");
-        String editFname = request.getParameter("editFirstname");
-        String editLname = request.getParameter("editLastname");
-        String editRole = request.getParameter("editRole");
-        String editPass = request.getParameter("editPassword");
-
-        String email = request.getParameter("email");
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String password = request.getParameter("password");
-        String role = request.getParameter("role");
-
+        String editEmail;
+        String editFname;
+        String editLname;
+        String editRole;
+        int editRoleID;
+        String editPass;
+        
+        String email;
+        String firstName;
+        String lastName;
+        String password;
+        int role;
 
         boolean active = true;
 
@@ -85,29 +85,46 @@ public class UserServlet extends HttpServlet {
 
             switch (action) {
                 case "edit":
-                    selectedUser = us.get(request.getParameter("editEmail"));
+                    selectedUser = us.get(request.getParameter("manageEmail"));
+                    
                     editEmail = selectedUser.getEmail();
                     editFname = selectedUser.getFirstName();
                     editLname = selectedUser.getLastName();
-                    editRole = String.valueOf(selectedUser.getRole().getRoleId());
+                    editRole = String.valueOf(selectedUser.getRole());
+                    editRoleID = selectedUser.getRole().getRoleId();
                     editPass = selectedUser.getPassword();
-
+                    
+                                 
                     request.setAttribute("editEmail", editEmail);
                     request.setAttribute("editFirstname", editFname);
                     request.setAttribute("editLastname", editLname);
                     request.setAttribute("editPassword", editPass);
-                    request.setAttribute("editRole", editRole);
+                    request.setAttribute("editRoleID", editRoleID);
+
                     break;
 
                 case "add":
-                    us.insert(email, firstName, lastName, password, active, Integer.parseInt(role));
+                    email = request.getParameter("email");
+                    firstName = request.getParameter("firstname");
+                    lastName = request.getParameter("lastname");
+                    password = request.getParameter("password");
+                    role = Integer.parseInt(request.getParameter("role"));
+                    
+                    us.insert(email, firstName, lastName, password, active, role);
                     break;
 
                 case "save":
-                    us.update(editEmail, editFname, editLname, editPass, active, Integer.parseInt(editRole));
+                    editEmail = request.getParameter("editEmail");
+                    editFname = request.getParameter("editFirstname");
+                    editLname = request.getParameter("editLastname");                    
+                    editPass = request.getParameter("editPassword");
+                    editRoleID = Integer.parseInt(request.getParameter("editRole"));
+
+                    us.update(editEmail, editFname, editLname, editPass, active, editRoleID);
                     break;
                     
                 case "delete":
+                    email = (String) request.getParameter("deleteEmail");
                     us.delete(email);
                     break;
                     
